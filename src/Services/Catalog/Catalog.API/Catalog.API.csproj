@@ -11,7 +11,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="MediatR" Version="14.0.0" />
+    <ProjectReference Include="../../../BuildingBlocks/BuildingBlocks/BuildingBlocks.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Carter" Version="8.2.0" />
   </ItemGroup>
 
 </Project>
