@@ -11,6 +11,8 @@
         <PackageReference Include="Carter" Version="8.2.0" />
         <PackageReference Include="Marten" Version="8.17.0" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.22"/>
+        <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="10.0.1" />
+        <PackageReference Include="Scrutor" Version="7.0.0" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2"/>
     </ItemGroup>
 
