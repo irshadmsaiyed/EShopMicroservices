@@ -25,4 +25,9 @@ services:
 volumes:
   postgres_basket:
   postgres_catalog:
-  redisinsight_data:
+  redisinsight_data:  discount.grpc:
+    image: discount.grpc
+    build:
+      context: .
+      dockerfile: Services/Discount/Discount.Grpc/Dockerfile
+
