@@ -11,6 +11,17 @@ public class DiscountService(DiscountContext dbContext, ILogger<DiscountService>
 {
     public override async Task<CouponModel> GetDiscount(GetDiscountRequest request, ServerCallContext context)
     {
+        // Log the request parameter and it's length
+        logger.LogInformation("GetDiscount called. Request.ProductName='{ProductName}' (len={Len})",
+            request?.ProductName, request?.ProductName?.Length ?? -1);
+        
+        // Log the host/environment
+        logger.LogInformation("Discount service instance: Machine={Machine}, Env={Env}",
+            Environment.MachineName, Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"));
+        
+        // Log the DB connected to
+        logger.LogInformation("DB Connection: {Conn}", dbContext.Database.GetDbConnection().DataSource);
+        
         var coupon = await dbContext
             .Coupons
             .FirstOrDefaultAsync(x => x.ProductName == request.ProductName);
@@ -18,7 +29,7 @@ public class DiscountService(DiscountContext dbContext, ILogger<DiscountService>
         if (coupon is null)
             coupon = new Coupon { ProductName = "No Discount", Amount = 0, Description = "No Discount Description" };
 
-        logger.LogInformation("Discount is retrieved fro ProductName:{productName}, Amount:{amount}",
+        logger.LogInformation("Discount is retrieved from ProductName:{productName}, Amount:{amount}",
             coupon.ProductName, coupon.Amount);
 
         var couponModel = coupon.Adapt<CouponModel>();

@@ -20,5 +20,13 @@ RUN dotnet publish "./Basket.API.csproj" -c $BUILD_CONFIGURATION -o /app/publish
 
 FROM base AS final
 WORKDIR /app
+# ✅ Trust the Dev CA used to sign discount.grpc cert
+USER root
+COPY certs/ca/devCA.crt /usr/local/share/ca-certificates/devCA.crt
+RUN update-ca-certificates
+
+# Switch back to app user (same as your base image user)
+USER $APP_UID
+
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "Basket.API.dll"]
