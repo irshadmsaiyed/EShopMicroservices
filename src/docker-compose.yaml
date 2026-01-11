@@ -3,12 +3,19 @@
 services:
   catalogdb:
     image: postgres
+
   basketdb:
     image: postgres
+
   distributedcache:
     image: redis
+
   redisinsight:
     image: redis/redisinsight:latest
+
+  orderdb:
+    platform: linux/amd64
+    image: mcr.microsoft.com/mssql/server:2022-latest
   
   catalog.api:
     platform: linux/amd64
@@ -30,16 +37,14 @@ services:
     build:
       context: .
       dockerfile: Services/Discount/Discount.Grpc/Dockerfile
-
-volumes:
-  postgres_basket:
-  postgres_catalog:
-  redisinsight_data:  
   
-
   ordering.api:
     image: ordering.api
     build:
       context: .
       dockerfile: Services/Ordering/Ordering.API/Dockerfile
 
+volumes:
+  postgres_basket:
+  postgres_catalog:
+  redisinsight_data:
