@@ -14,25 +14,25 @@ services:
     image: redis/redisinsight:latest
 
   orderdb:
-    platform: linux/amd64
+    #platform: linux/amd64
     image: mcr.microsoft.com/mssql/server:2022-latest
   
   catalog.api:
-    platform: linux/amd64
+    #platform: linux/amd64
     image: ${DOCKER_REGISTRY-}catalogapi
     build:
       context: .
       dockerfile: Services/Catalog/Catalog.API/Dockerfile
 
   basket.api:
-    platform: linux/amd64
+    #platform: linux/amd64
     image: ${DOCKER_REGISTRY-}basketapi
     build:
       context: .
       dockerfile: Services/Basket.API/Dockerfile
   
   discount.grpc:
-    platform: linux/amd64
+    #platform: linux/amd64
     image: ${DOCKER_REGISTRY-}discount.grpc
     build:
       context: .
@@ -48,3 +48,4 @@ volumes:
   postgres_basket:
   postgres_catalog:
   redisinsight_data:
+  sqlserver_orderdb:
