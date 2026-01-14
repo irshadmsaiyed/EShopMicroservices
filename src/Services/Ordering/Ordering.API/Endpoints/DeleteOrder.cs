@@ -1,3 +1,5 @@
+using Ordering.Application.Orders.Commands.DeleteOrder;
+
 namespace Ordering.API.Endpoints;
 
 //public record DeleteOrderRequest(Guid Id);
@@ -9,7 +11,7 @@ public class DeleteOrder : ICarterModule
     {
         app.MapDelete("/orders/{id}", async (Guid id, ISender sender) =>
             {
-                var result = await sender.Send(id);
+                var result = await sender.Send(new DeleteOrderCommand(id));
 
                 var response = result.Adapt<DeleteOrderResponse>();
 
