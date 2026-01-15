@@ -36,6 +36,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ordering.Application", "Ser
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ordering.Infrastructure", "Services\Ordering\Ordering.Infrastructure\Ordering.Infrastructure.csproj", "{AE731726-B71B-4994-8788-4A4E3FC6E0D1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildingBlocks.Messaging", "BuildingBlocks\BuildingBlocks.Messaging\BuildingBlocks.Messaging.csproj", "{63A5E978-81E5-49A4-BCC3-C4FC69EFA62F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -142,6 +144,18 @@ Global
 		{AE731726-B71B-4994-8788-4A4E3FC6E0D1}.Release|x64.Build.0 = Release|Any CPU
 		{AE731726-B71B-4994-8788-4A4E3FC6E0D1}.Release|x86.ActiveCfg = Release|Any CPU
 		{AE731726-B71B-4994-8788-4A4E3FC6E0D1}.Release|x86.Build.0 = Release|Any CPU
+		{63A5E978-81E5-49A4-BCC3-C4FC69EFA62F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63A5E978-81E5-49A4-BCC3-C4FC69EFA62F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63A5E978-81E5-49A4-BCC3-C4FC69EFA62F}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{63A5E978-81E5-49A4-BCC3-C4FC69EFA62F}.Debug|x64.Build.0 = Debug|Any CPU
+		{63A5E978-81E5-49A4-BCC3-C4FC69EFA62F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{63A5E978-81E5-49A4-BCC3-C4FC69EFA62F}.Debug|x86.Build.0 = Debug|Any CPU
+		{63A5E978-81E5-49A4-BCC3-C4FC69EFA62F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63A5E978-81E5-49A4-BCC3-C4FC69EFA62F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63A5E978-81E5-49A4-BCC3-C4FC69EFA62F}.Release|x64.ActiveCfg = Release|Any CPU
+		{63A5E978-81E5-49A4-BCC3-C4FC69EFA62F}.Release|x64.Build.0 = Release|Any CPU
+		{63A5E978-81E5-49A4-BCC3-C4FC69EFA62F}.Release|x86.ActiveCfg = Release|Any CPU
+		{63A5E978-81E5-49A4-BCC3-C4FC69EFA62F}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -159,5 +173,6 @@ Global
 		{929B2F9A-18C3-4430-995B-7C6C70B892FD} = {270BF615-5134-42BF-A425-6BB9992A8050}
 		{AE731726-B71B-4994-8788-4A4E3FC6E0D1} = {270BF615-5134-42BF-A425-6BB9992A8050}
 		{270BF615-5134-42BF-A425-6BB9992A8050} = {5854FF58-B8C5-05C6-5BF2-ACE42193F22B}
+		{63A5E978-81E5-49A4-BCC3-C4FC69EFA62F} = {7266C4A9-E384-DC00-0EB6-47F6002CFBA7}
 	EndGlobalSection
 EndGlobal
