@@ -17,6 +17,9 @@ services:
     platform: linux/amd64
     image: mcr.microsoft.com/mssql/server:2022-latest
   
+  messagebroker:
+    image: rabbitmq:management
+  
   catalog.api:
     #platform: linux/amd64
     image: ${DOCKER_REGISTRY-}catalogapi
