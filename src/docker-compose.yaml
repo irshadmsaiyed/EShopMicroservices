@@ -14,7 +14,7 @@ services:
     image: redis/redisinsight:latest
 
   orderdb:
-    #platform: linux/amd64
+    platform: linux/amd64
     image: mcr.microsoft.com/mssql/server:2022-latest
   
   messagebroker:

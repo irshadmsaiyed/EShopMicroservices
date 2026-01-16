@@ -119,7 +119,7 @@ services:
       #- ASPNETCORE_URLS=http://+:8080
       #- ASPNETCORE_Kestrel__Certificates__Default__Path=/https/discountgrpc.pfx
       #- ASPNETCORE_Kestrel__Certificates__Default__Password=pass1234
-      - ConnectionStrings__Database=Server=orderdb;Database=OrderDb;User Id=sa;Password=SwN@12345678;Encrypt=False;TrustServerCertificate=True
+      - ConnectionStrings__Database=Server=orderdb,11433;Database=OrderDb;User Id=sa;Password=SwN@12345678;Encrypt=False;TrustServerCertificate=True
     depends_on:
       - orderdb
     ports:
