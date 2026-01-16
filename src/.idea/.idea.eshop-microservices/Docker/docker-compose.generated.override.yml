@@ -55,3 +55,21 @@ services:
     - "/Users/irshadali/Desktop/code149/dotnet/microservices/EShopMicroservices/src:/src:rw"
     - "/Users/irshadali/.nuget/packages:/home/app/.nuget/packages"
     working_dir: "/app"
+  ordering.api:
+    build:
+      context: "/Users/irshadali/Desktop/code149/dotnet/microservices/EShopMicroservices/src"
+      dockerfile: "Services/Ordering/Ordering.API/Dockerfile"
+      target: "base"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/bin/Debug/net8.0/Ordering.API.dll"
+    environment:
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+    image: "ordering.api:dev"
+    ports: []
+    volumes:
+    - "/Users/irshadali/Desktop/code149/dotnet/microservices/EShopMicroservices/src/Services/Ordering/Ordering.API:/app:rw"
+    - "/Users/irshadali/Desktop/code149/dotnet/microservices/EShopMicroservices/src:/src:rw"
+    - "/Users/irshadali/.nuget/packages:/home/app/.nuget/packages"
+    working_dir: "/app"

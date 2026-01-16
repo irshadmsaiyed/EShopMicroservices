@@ -14,7 +14,7 @@ services:
     image: redis/redisinsight:latest
 
   orderdb:
-    platform: linux/amd64
+    #platform: linux/amd64
     image: mcr.microsoft.com/mssql/server:2022-latest
   
   messagebroker:
@@ -41,12 +41,12 @@ services:
       context: .
       dockerfile: Services/Discount/Discount.Grpc/Dockerfile
   
-#  ordering.api:
-#    platform: linux/amd64
-#    image: ordering.api
-#    build:
-#      context: .
-#      dockerfile: Services/Ordering/Ordering.API/Dockerfile
+  ordering.api:
+    #platform: linux/amd64
+    image: ${DOCKER_REGISTRY-}ordering.api
+    build:
+      context: .
+      dockerfile: Services/Ordering/Ordering.API/Dockerfile
 
 volumes:
   postgres_basket:
