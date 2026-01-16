@@ -46,7 +46,7 @@ services:
       - SA_PASSWORD=SwN@12345678
     restart: always
     ports:
-      - "1433:1433"
+      - "11433:1433"
   
   messagebroker:
     container_name: messagebroker
