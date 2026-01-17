@@ -73,3 +73,21 @@ services:
     - "/Users/irshadali/Desktop/code149/dotnet/microservices/EShopMicroservices/src:/src:rw"
     - "/Users/irshadali/.nuget/packages:/home/app/.nuget/packages"
     working_dir: "/app"
+  yarpapigateway:
+    build:
+      context: "/Users/irshadali/Desktop/code149/dotnet/microservices/EShopMicroservices/src"
+      dockerfile: "ApiGateways/YarpApiGateway/Dockerfile"
+      target: "base"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/bin/Debug/net8.0/YarpApiGateway.dll"
+    environment:
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+    image: "yarpapigateway:dev"
+    ports: []
+    volumes:
+    - "/Users/irshadali/Desktop/code149/dotnet/microservices/EShopMicroservices/src/ApiGateways/YarpApiGateway:/app:rw"
+    - "/Users/irshadali/Desktop/code149/dotnet/microservices/EShopMicroservices/src:/src:rw"
+    - "/Users/irshadali/.nuget/packages:/home/app/.nuget/packages"
+    working_dir: "/app"
