@@ -1,7 +1,11 @@
+using BuildingBlocks.Logger;
+using Serilog;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 //builder.WebHost.ConfigureKestrel(options => { options.ListenAnyIP(8080); });
+builder.Host.UseCommonSerilog(serviceName: "Catalog.API");
 
 var assembly = typeof(Program).Assembly;
 builder.Services.AddMediatR(config =>
@@ -27,6 +31,7 @@ builder.Services.AddHealthChecks()
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+app.UseSerilogRequestLogging();
 app.MapCarter();
 
 app.UseExceptionHandler(options => { });
