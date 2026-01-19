@@ -1,11 +1,14 @@
+using BuildingBlocks.Logger;
 using Microsoft.AspNetCore.RateLimiting;
+using Serilog;
+using YarpApiGateway.Transformer;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddReverseProxy()
-    .LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"));
+// Log services
+builder.Host.UseCommonSerilog(serviceName: "API.Gateway");
 
+// Add services to the container.
 builder.Services.AddRateLimiter(rateLimiterOptions =>
 {
     rateLimiterOptions.AddFixedWindowLimiter("fixed", options =>
@@ -15,9 +18,21 @@ builder.Services.AddRateLimiter(rateLimiterOptions =>
     });
 });
 
+builder.Services.AddSingleton<LoggingTransformProvider>();
+
+// Correlation + outgoing call logging (shared BuildingBlocks)
+//builder.Services.AddHttpContextAccessor();
+builder.Services.AddTransient<LoggingDelegatingHandler>();
+
+builder.Services
+    .AddReverseProxy()
+    .LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"))
+    .AddTransforms<LoggingTransformProvider>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+app.UseSerilogRequestLogging();
 app.UseRateLimiter();
 app.MapReverseProxy();
 
