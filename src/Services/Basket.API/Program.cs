@@ -3,6 +3,7 @@ using BuildingBlocks.Messaging.MassTransit;
 using Discount.Grpc;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -58,7 +59,8 @@ builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 
 builder.Services.AddHealthChecks()
     .AddNpgSql(builder.Configuration.GetConnectionString("Database")!)
-    .AddRedis(builder.Configuration.GetConnectionString("Redis")!);
+    .AddRedis(builder.Configuration.GetConnectionString("Redis")!)
+    .AddCheck("self", () => HealthCheckResult.Healthy());
 
 var app = builder.Build();
 
