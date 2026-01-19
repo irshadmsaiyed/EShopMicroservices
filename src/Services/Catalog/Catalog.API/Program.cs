@@ -1,9 +1,11 @@
-using Microsoft.Extensions.Diagnostics.HealthChecks;
+using BuildingBlocks.Logger;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 //builder.WebHost.ConfigureKestrel(options => { options.ListenAnyIP(8080); });
+builder.Host.UseCommonSerilog(serviceName: "Catalog.API");
 
 var assembly = typeof(Program).Assembly;
 builder.Services.AddMediatR(config =>
@@ -24,12 +26,12 @@ if (builder.Environment.IsDevelopment())
 builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 
 builder.Services.AddHealthChecks()
-    .AddNpgSql(builder.Configuration.GetConnectionString("Database")!)
-    .AddCheck("self", () => HealthCheckResult.Healthy());
+    .AddNpgSql(builder.Configuration.GetConnectionString("Database")!);
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+app.UseSerilogRequestLogging();
 app.MapCarter();
 
 app.UseExceptionHandler(options => { });

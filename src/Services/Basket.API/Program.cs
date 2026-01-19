@@ -1,13 +1,17 @@
 using BuildingBlocks.Exceptions.Handler;
+using BuildingBlocks.Logger;
 using BuildingBlocks.Messaging.MassTransit;
 using Discount.Grpc;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
-using Microsoft.Extensions.Diagnostics.HealthChecks;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+// Log services
+builder.Host.UseCommonSerilog(serviceName: "Basket.API");
 
 // Application Services
 var assembly = typeof(Program).Assembly;
@@ -59,12 +63,12 @@ builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 
 builder.Services.AddHealthChecks()
     .AddNpgSql(builder.Configuration.GetConnectionString("Database")!)
-    .AddRedis(builder.Configuration.GetConnectionString("Redis")!)
-    .AddCheck("self", () => HealthCheckResult.Healthy());
+    .AddRedis(builder.Configuration.GetConnectionString("Redis")!);
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+app.UseSerilogRequestLogging();
 app.MapCarter();
 app.UseExceptionHandler(option => { });
 app.UseHealthChecks("/health",
