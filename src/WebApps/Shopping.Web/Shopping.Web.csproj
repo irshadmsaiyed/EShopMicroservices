@@ -18,6 +18,11 @@
     <Folder Include="Models\Basket\" />
     <Folder Include="Models\Catalog\" />
     <Folder Include="Models\Ordering\" />
+    <Folder Include="Services/" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Refit.HttpClientFactory" Version="9.0.2" />
   </ItemGroup>
 
 </Project>
