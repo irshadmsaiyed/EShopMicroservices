@@ -3,7 +3,7 @@ version: "3.4"
 services:
   basket.api:
     build:
-      context: "D:\\software\\.NET\\micro services\\EshopMicroservices\\src"
+      context: "/Users/irshadali/Desktop/code149/dotnet/microservices/EShopMicroservices/src"
       dockerfile: "Services/Basket.API/Dockerfile"
       target: "base"
     command: []
@@ -11,18 +11,17 @@ services:
     - "dotnet"
     - "/app/bin/Debug/net8.0/Basket.API.dll"
     environment:
-      ASPNETCORE_ENVIRONMENT: "Development"
       DOTNET_USE_POLLING_FILE_WATCHER: "true"
     image: "basketapi:dev"
     ports: []
     volumes:
-    - "D:\\software\\.NET\\micro services\\EshopMicroservices\\src\\Services\\Basket.API:/app:rw"
-    - "D:\\software\\.NET\\micro services\\EshopMicroservices\\src:/src:rw"
-    - "C:\\Users\\Techno\\.nuget\\packages:/home/app/.nuget/packages"
+    - "/Users/irshadali/Desktop/code149/dotnet/microservices/EShopMicroservices/src/Services/Basket.API:/app:rw"
+    - "/Users/irshadali/Desktop/code149/dotnet/microservices/EShopMicroservices/src:/src:rw"
+    - "/Users/irshadali/.nuget/packages:/home/app/.nuget/packages"
     working_dir: "/app"
   catalog.api:
     build:
-      context: "D:\\software\\.NET\\micro services\\EshopMicroservices\\src"
+      context: "/Users/irshadali/Desktop/code149/dotnet/microservices/EShopMicroservices/src"
       dockerfile: "Services/Catalog/Catalog.API/Dockerfile"
       target: "base"
     command: []
@@ -30,19 +29,17 @@ services:
     - "dotnet"
     - "/app/bin/Debug/net8.0/Catalog.API.dll"
     environment:
-      ASPNETCORE_ENVIRONMENT: "Development"
       DOTNET_USE_POLLING_FILE_WATCHER: "true"
     image: "catalogapi:dev"
     ports: []
     volumes:
-    - "D:\\software\\.NET\\micro services\\EshopMicroservices\\src\\Services\\Catalog\\\
-      Catalog.API:/app:rw"
-    - "D:\\software\\.NET\\micro services\\EshopMicroservices\\src:/src:rw"
-    - "C:\\Users\\Techno\\.nuget\\packages:/home/app/.nuget/packages"
+    - "/Users/irshadali/Desktop/code149/dotnet/microservices/EShopMicroservices/src/Services/Catalog/Catalog.API:/app:rw"
+    - "/Users/irshadali/Desktop/code149/dotnet/microservices/EShopMicroservices/src:/src:rw"
+    - "/Users/irshadali/.nuget/packages:/home/app/.nuget/packages"
     working_dir: "/app"
   discount.grpc:
     build:
-      context: "D:\\software\\.NET\\micro services\\EshopMicroservices\\src"
+      context: "/Users/irshadali/Desktop/code149/dotnet/microservices/EShopMicroservices/src"
       dockerfile: "Services/Discount/Discount.Grpc/Dockerfile"
       target: "base"
     command: []
@@ -50,19 +47,17 @@ services:
     - "dotnet"
     - "/app/bin/Debug/net8.0/Discount.Grpc.dll"
     environment:
-      ASPNETCORE_ENVIRONMENT: "Development"
       DOTNET_USE_POLLING_FILE_WATCHER: "true"
     image: "discount.grpc:dev"
     ports: []
     volumes:
-    - "D:\\software\\.NET\\micro services\\EshopMicroservices\\src\\Services\\Discount\\\
-      Discount.Grpc:/app:rw"
-    - "D:\\software\\.NET\\micro services\\EshopMicroservices\\src:/src:rw"
-    - "C:\\Users\\Techno\\.nuget\\packages:/home/app/.nuget/packages"
+    - "/Users/irshadali/Desktop/code149/dotnet/microservices/EShopMicroservices/src/Services/Discount/Discount.Grpc:/app:rw"
+    - "/Users/irshadali/Desktop/code149/dotnet/microservices/EShopMicroservices/src:/src:rw"
+    - "/Users/irshadali/.nuget/packages:/home/app/.nuget/packages"
     working_dir: "/app"
   ordering.api:
     build:
-      context: "D:\\software\\.NET\\micro services\\EshopMicroservices\\src"
+      context: "/Users/irshadali/Desktop/code149/dotnet/microservices/EShopMicroservices/src"
       dockerfile: "Services/Ordering/Ordering.API/Dockerfile"
       target: "base"
     command: []
@@ -70,19 +65,17 @@ services:
     - "dotnet"
     - "/app/bin/Debug/net8.0/Ordering.API.dll"
     environment:
-      ASPNETCORE_ENVIRONMENT: "Development"
       DOTNET_USE_POLLING_FILE_WATCHER: "true"
     image: "ordering.api:dev"
     ports: []
     volumes:
-    - "D:\\software\\.NET\\micro services\\EshopMicroservices\\src\\Services\\Ordering\\\
-      Ordering.API:/app:rw"
-    - "D:\\software\\.NET\\micro services\\EshopMicroservices\\src:/src:rw"
-    - "C:\\Users\\Techno\\.nuget\\packages:/home/app/.nuget/packages"
+    - "/Users/irshadali/Desktop/code149/dotnet/microservices/EShopMicroservices/src/Services/Ordering/Ordering.API:/app:rw"
+    - "/Users/irshadali/Desktop/code149/dotnet/microservices/EShopMicroservices/src:/src:rw"
+    - "/Users/irshadali/.nuget/packages:/home/app/.nuget/packages"
     working_dir: "/app"
   yarpapigateway:
     build:
-      context: "D:\\software\\.NET\\micro services\\EshopMicroservices\\src"
+      context: "/Users/irshadali/Desktop/code149/dotnet/microservices/EShopMicroservices/src"
       dockerfile: "ApiGateways/YarpApiGateway/Dockerfile"
       target: "base"
     command: []
@@ -90,13 +83,11 @@ services:
     - "dotnet"
     - "/app/bin/Debug/net8.0/YarpApiGateway.dll"
     environment:
-      ASPNETCORE_ENVIRONMENT: "Development"
       DOTNET_USE_POLLING_FILE_WATCHER: "true"
     image: "yarpapigateway:dev"
     ports: []
     volumes:
-    - "D:\\software\\.NET\\micro services\\EshopMicroservices\\src\\ApiGateways\\\
-      YarpApiGateway:/app:rw"
-    - "D:\\software\\.NET\\micro services\\EshopMicroservices\\src:/src:rw"
-    - "C:\\Users\\Techno\\.nuget\\packages:/home/app/.nuget/packages"
+    - "/Users/irshadali/Desktop/code149/dotnet/microservices/EShopMicroservices/src/ApiGateways/YarpApiGateway:/app:rw"
+    - "/Users/irshadali/Desktop/code149/dotnet/microservices/EShopMicroservices/src:/src:rw"
+    - "/Users/irshadali/.nuget/packages:/home/app/.nuget/packages"
     working_dir: "/app"
