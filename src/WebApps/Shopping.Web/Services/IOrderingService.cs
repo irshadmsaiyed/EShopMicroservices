@@ -1,5 +1,3 @@
-using Shopping.Web.Models.Ordering;
-
 namespace Shopping.Web.Services;
 
 public interface IOrderingService
