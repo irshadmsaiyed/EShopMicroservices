@@ -12,7 +12,7 @@ services:
       - "5432:5432"
     volumes:
       - postgres_catalog:/var/lib/postgresql
-  
+
   basketdb:
     container_name: basketdb
     environment:
@@ -24,13 +24,13 @@ services:
       - "5433:5432"
     volumes:
       - postgres_basket:/var/lib/postgresql
-  
+
   distributedcache:
     container_name: distributedcache
     restart: always
     ports:
       - "6379:6379"
-  
+
   redisinsight:
     image: redis/redisinsight:latest
     container_name: redisinsight
@@ -38,7 +38,7 @@ services:
       - "5540:5540"
     depends_on:
       - distributedcache
-  
+
   orderdb:
     container_name: orderdb
     environment:
@@ -52,7 +52,7 @@ services:
       interval: 10s
       timeout: 5s
       retries: 20
-  
+
   messagebroker:
     container_name: messagebroker
     hostname: ecommerce-mq
@@ -63,7 +63,7 @@ services:
     ports:
       - "5672:5672"
       - "15672:15672"
-  
+
   catalog.api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
@@ -78,12 +78,14 @@ services:
     #volumes:
       #- ~/.aspnet/https:/https:ro
       #- ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro # for windows
-  
+
   basket.api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080
-      #- ASPNETCORE_HTTPS_PORTS=8081
+      - ASPNETCORE_HTTPS_PORTS=8081
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=12345
       - ConnectionStrings__Database=Server=basketdb;Port=5432;Database=BasketDb;User Id=postgres;Password=postgres;Include Error Detail=true
       - ConnectionStrings__Redis=distributedcache:6379
       - GrpcSettings__DiscountUrl=https://discount.grpc:8081
@@ -96,11 +98,13 @@ services:
       - discount.grpc
     ports:
       - "6001:8080"
-      #- "6061:8081"
-    #volumes:
+      - "6061:8081"
+    volumes:
       #- ~/.aspnet/https:/https:ro
       #- ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro # for windows
-  
+      - D:\software\.NET\micro services\EshopMicroservices\src\certs\basket:/https:ro
+      #- ./certs/ca/devCA.crt:/usr/local/share/ca-certificates/eshop-ca.crt:ro
+
   discount.grpc:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
@@ -113,9 +117,11 @@ services:
       - "6002:8080"
       - "6062:8081"
     volumes:
-      #- ./certs/discount:/https:ro
-      - ~/.aspnet/https:/https:ro
-  
+      #- ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro # for windows
+      - ./certs/discount:/https:ro
+      #- ~/.aspnet/https:/https:ro
+      #- ./certs/ca/devCA.crt:/usr/local/share/ca-certificates/eshop-ca.crt:ro
+
   ordering.api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
@@ -136,8 +142,8 @@ services:
       - "6003:8080"
       #- "6063:8081"
     #volumes:
-      #- ~/.aspnet/https:/https:ro 
-  
+      #- ~/.aspnet/https:/https:ro
+
   yarpapigateway:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
@@ -154,7 +160,7 @@ services:
       - "6064:8081"
     volumes:
       - ~/.aspnet/https:/https:ro
-  
+
   elasticsearch:
     container_name: elasticsearch
     environment:
@@ -165,7 +171,7 @@ services:
       - "9200:9200"
     volumes:
       - elasticsearch-data:/usr/share/elasticsearch/data
-  
+
   kibana:
     container_name: kibana
     depends_on:

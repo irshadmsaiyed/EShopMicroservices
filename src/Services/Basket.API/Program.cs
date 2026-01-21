@@ -46,10 +46,12 @@ builder.Services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(
     })
     .ConfigurePrimaryHttpMessageHandler(() =>
     {
-        var handler = new HttpClientHandler
+        var handler = new HttpClientHandler();
+
+        handler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) =>
         {
-            ServerCertificateCustomValidationCallback =
-                HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+            Console.WriteLine($"[DEV] gRPC TLS validation bypassed. Errors: {errors}");
+            return true; // always accept
         };
 
         return handler;
