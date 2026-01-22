@@ -70,6 +70,7 @@ services:
       - ASPNETCORE_HTTP_PORTS=8080
       #- ASPNETCORE_HTTPS_PORTS=8081
       - ConnectionStrings__Database=Server=catalogdb;Port=5432;Database=CatalogDb;User Id=postgres;Password=postgres;Include Error Detail=true
+      - "ElasticConfiguration:Uri=http://elasticsearch:9200"
     depends_on:
       - catalogdb
     ports:
@@ -189,6 +190,7 @@ services:
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
       - ASPNETCORE_Kestrel__Certificates__Default__Password=12345
       - ApiSettings__GatewayAddress=http://yarpapigateway:8080
+      - "ElasticConfiguration:Uri=http://elasticsearch:9200"
     depends_on:
       - yarpapigateway
     ports:
