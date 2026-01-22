@@ -93,6 +93,7 @@ services:
       - MessageBroker__Host=amqp://ecommerce-mq:5672
       - MessageBroker__UserName=guest
       - MessageBroker__Password=guest
+      - "Elastic__Uri=http://elasticsearch:9200"
     depends_on:
       - basketdb
       - distributedcache
@@ -101,7 +102,7 @@ services:
       - "6001:8080"
       #- "6061:8081"
     #volumes:
-      #- ~/.aspnet/https:/https:ro
+      #- ~/.aspnet/https:/https:ro #for Mac
       #- ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro # for windows
       #- D:\software\.NET\micro services\EshopMicroservices\src\certs\basket:/https:ro
       #- ./certs/ca/devCA.crt:/usr/local/share/ca-certificates/eshop-ca.crt:ro
@@ -114,6 +115,7 @@ services:
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/discount.pfx
       - ASPNETCORE_Kestrel__Certificates__Default__Password=pass1234
       - ConnectionStrings__Database=Data Source=discountdb
+      - "Elastic__Uri=http://elasticsearch:9200"
     ports:
       - "6002:8080"
       - "6062:8081"
@@ -133,6 +135,7 @@ services:
       - MessageBroker__UserName=guest
       - MessageBroker__Password=guest
       - FeatureManagement__OrderFullfilment=false
+      - "Elastic__Uri=http://elasticsearch:9200"
     depends_on:
       orderdb:
         condition: service_healthy
@@ -152,6 +155,7 @@ services:
       - ASPNETCORE_HTTPS_PORTS=8081
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/yarpapigateway.pfx
       - ASPNETCORE_Kestrel__Certificates__Default__Password=pass1234
+      - "Elastic__Uri=http://elasticsearch:9200"
     depends_on:
       - catalog.api
       - basket.api
@@ -190,7 +194,7 @@ services:
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
       - ASPNETCORE_Kestrel__Certificates__Default__Password=12345
       - ApiSettings__GatewayAddress=http://yarpapigateway:8080
-      - "ElasticConfiguration:Uri=http://elasticsearch:9200"
+      - "Elastic__Uri=http://elasticsearch:9200"
     depends_on:
       - yarpapigateway
     ports:
@@ -198,4 +202,5 @@ services:
       - "6065:8081"
     volumes:
       #- ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro # for windows
-      - ./certs/basket:/https:ro
+      #- ./certs/basket:/https:ro
+      - ~/.aspnet/https:/https:ro #for Mac

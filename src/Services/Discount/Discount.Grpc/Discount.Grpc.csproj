@@ -25,6 +25,9 @@
       <Protobuf Include="Protos\discount.proto" GrpcService="Server" />
     </ItemGroup>
     <ItemGroup>
+      <ProjectReference Include="..\..\..\BuildingBlocks\BuildingBlocks\BuildingBlocks.csproj" />
+    </ItemGroup>
+    <ItemGroup>
       <Content Include="..\..\..\.dockerignore">
         <Link>.dockerignore</Link>
       </Content>

@@ -6,8 +6,7 @@ using YarpApiGateway.Transformer;
 var builder = WebApplication.CreateBuilder(args);
 
 // Log services
-// builder.Host.UseCommonSerilog(serviceName: "API.Gateway");
-builder.Host.UseCommonSerilog(serviceName: "");
+builder.Host.UseCommonSerilog(serviceName: "Api.Gateway");
 
 // Add services to the container.
 builder.Services.AddRateLimiter(rateLimiterOptions =>
@@ -23,7 +22,7 @@ builder.Services.AddSingleton<LoggingTransformProvider>();
 
 // Correlation + outgoing call logging (shared BuildingBlocks)
 //builder.Services.AddHttpContextAccessor();
-builder.Services.AddTransient<LoggingDelegatingHandler>();
+//builder.Services.AddTransient<LoggingDelegatingHandler>();
 
 builder.Services
     .AddReverseProxy()
