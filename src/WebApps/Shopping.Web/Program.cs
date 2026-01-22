@@ -1,4 +1,10 @@
+using BuildingBlocks.Logger;
+using Serilog;
+
 var builder = WebApplication.CreateBuilder(args);
+
+// Log services
+builder.Host.UseCommonSerilog(serviceName: "Web");
 
 // Add services to the container.
 builder.Services.AddRazorPages();
@@ -22,6 +28,8 @@ builder.Services.AddRefitClient<IOrderingService>()
     });
 
 var app = builder.Build();
+
+app.UseSerilogRequestLogging();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
