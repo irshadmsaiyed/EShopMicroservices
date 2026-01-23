@@ -1,4 +1,5 @@
 using BuildingBlocks.Exceptions.Handler;
+using BuildingBlocks.Extensions;
 using BuildingBlocks.Logger;
 using BuildingBlocks.Messaging.MassTransit;
 using Discount.Grpc;
@@ -68,6 +69,9 @@ builder.Services.AddHealthChecks()
     .AddNpgSql(builder.Configuration.GetConnectionString("Database")!)
     .AddRedis(builder.Configuration.GetConnectionString("Redis")!,"Redis Health", HealthStatus.Degraded);
 
+// Add Swagger services
+builder.Services.AddCommonSwagger("Basket API");
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -80,5 +84,11 @@ app.UseHealthChecks("/health",
         Predicate =  _ => true,
         ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
     });
+
+// Enable Swagger only in Development (recommended)
+if (app.Environment.IsDevelopment())
+{
+    app.UseCommonSwagger("Basket API");
+}
 
 app.Run();

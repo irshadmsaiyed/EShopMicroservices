@@ -1,5 +1,7 @@
+using BuildingBlocks.Extensions;
 using BuildingBlocks.Logger;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+using Microsoft.OpenApi;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -29,6 +31,9 @@ builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 builder.Services.AddHealthChecks()
     .AddNpgSql(builder.Configuration.GetConnectionString("Database")!);
 
+// Add Swagger services
+builder.Services.AddCommonSwagger("Catalog API");
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -42,5 +47,11 @@ app.UseHealthChecks("/health", new HealthCheckOptions
     Predicate = _ => true,
     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
 });
+
+// Enable Swagger only in Development (recommended)
+if (app.Environment.IsDevelopment())
+{
+    app.UseCommonSwagger("Catalog API");
+}
 
 app.Run();

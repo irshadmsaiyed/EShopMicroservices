@@ -1,3 +1,4 @@
+using BuildingBlocks.Extensions;
 using BuildingBlocks.Logger;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
@@ -22,6 +23,9 @@ builder.Services
 builder.Services.AddHealthChecks()
     .AddDbContextCheck<ApplicationDbContext>();
 
+// Add Swagger services
+builder.Services.AddCommonSwagger("Discount API");
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -31,6 +35,7 @@ app.UseApiServices();
 if (app.Environment.IsDevelopment())
 {
     await app.InitialiseDatabaseAsync();
+    app.UseCommonSwagger("Discount API");
 }
 
 app.UseHealthChecks("/health", new HealthCheckOptions
