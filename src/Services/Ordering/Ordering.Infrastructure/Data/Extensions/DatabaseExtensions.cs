@@ -1,5 +1,9 @@
 ﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Polly;
+using Serilog;
 
 namespace Ordering.Infrastructure.Data.Extensions;
 
@@ -8,12 +12,27 @@ public static class DatabaseExtensions
     public static async Task InitialiseDatabaseAsync(this WebApplication app)
     {
         using var scope = app.Services.CreateScope();
-
         var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+        var logger = scope.ServiceProvider.GetRequiredService<ILogger<ApplicationDbContext>>();
 
-        context.Database.MigrateAsync().GetAwaiter().GetResult();
+        var retry = Policy.Handle<SqlException>()
+            .WaitAndRetryAsync(
+                retryCount: 5,
+                sleepDurationProvider: retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)),
+                onRetry: (exception, timeSpan, retry, _) =>
+                {
+                    logger.LogWarning(exception,
+                        "Retry {Retry} while migrating database. Waiting {Delay}s",
+                        retry, timeSpan.TotalSeconds);
+                }
+            );
 
-        await SeedAsync(context);
+        await retry.ExecuteAsync(async () =>
+        {
+            //context.Database.MigrateAsync().GetAwaiter().GetResult();
+            await context.Database.MigrateAsync();
+            await SeedAsync(context);
+        });
     }
 
     private static async Task SeedAsync(ApplicationDbContext context)
