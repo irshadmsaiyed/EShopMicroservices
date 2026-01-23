@@ -1,4 +1,5 @@
 using BuildingBlocks.Logger;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -38,6 +39,7 @@ app.UseExceptionHandler(options => { });
 
 app.UseHealthChecks("/health", new HealthCheckOptions
 {
+    Predicate = _ => true,
     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
 });
 

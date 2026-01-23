@@ -4,6 +4,7 @@ using BuildingBlocks.Messaging.MassTransit;
 using Discount.Grpc;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -65,7 +66,7 @@ builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 
 builder.Services.AddHealthChecks()
     .AddNpgSql(builder.Configuration.GetConnectionString("Database")!)
-    .AddRedis(builder.Configuration.GetConnectionString("Redis")!);
+    .AddRedis(builder.Configuration.GetConnectionString("Redis")!,"Redis Health", HealthStatus.Degraded);
 
 var app = builder.Build();
 
@@ -76,6 +77,7 @@ app.UseExceptionHandler(option => { });
 app.UseHealthChecks("/health",
     new HealthCheckOptions
     {
+        Predicate =  _ => true,
         ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
     });
 
