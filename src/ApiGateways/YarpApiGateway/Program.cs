@@ -1,3 +1,4 @@
+using BuildingBlocks.Extensions;
 using BuildingBlocks.Logger;
 using Microsoft.AspNetCore.RateLimiting;
 using Serilog;
@@ -29,11 +30,24 @@ builder.Services
     .LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"))
     .AddTransforms<LoggingTransformProvider>();
 
+// Add Swagger services
+builder.Services.AddCommonSwagger("API Gateway");
+
+builder.Services.AddHealthChecks();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 app.UseSerilogRequestLogging();
 app.UseRateLimiter();
 app.MapReverseProxy();
+
+// Enable Swagger only in Development (recommended)
+if (app.Environment.IsDevelopment())
+{
+    app.UseCommonSwagger("Basket API");
+}
+
+app.MapHealthChecks("/health");
 
 app.Run();

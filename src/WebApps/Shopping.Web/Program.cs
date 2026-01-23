@@ -1,4 +1,7 @@
 using BuildingBlocks.Logger;
+using HealthChecks.UI.Client;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Polly;
 using Polly.Extensions.Http;
 using Serilog;
@@ -29,6 +32,12 @@ builder.Services.AddRefitClient<IOrderingService>()
     .AddHttpMessageHandler<LoggingDelegatingHandler>()
     .AddPolicyHandler(GetRetryPolicy())
     .AddPolicyHandler(GetCircuitBreakerPolicy());
+
+Console.WriteLine($"{builder.Configuration["ApiSettings:GatewayAddress"]}/swagger/index.html");
+
+builder.Services.AddHealthChecks()
+    .AddUrlGroup(new Uri($"{builder.Configuration["ApiSettings:GatewayAddress"]}/health"), "Api Gateway",
+        HealthStatus.Degraded);
 
 static IAsyncPolicy<HttpResponseMessage> GetRetryPolicy()
 {
@@ -80,5 +89,11 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapRazorPages();
+app.UseHealthChecks("/health",
+    new HealthCheckOptions
+    {
+        Predicate = _ => true,
+        ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+    });
 
 app.Run();
